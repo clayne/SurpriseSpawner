@@ -25,12 +25,14 @@ public:
     {
         auto                     settings   = Settings::GetSingleton();
         std::vector<std::string> exceptions
-     * =
+
+     * * =
      * settings->JSONSettings["ContainerIDs"];        
 
         if (std::count(exceptions.begin(), exceptions.end(), a_contEDID.c_str())) {
-            logger::debug("{}
-     * is a
+ logger::debug("{}
+     * is
+     * a
      * restricted container", a_contEDID);
             return true;
         }
@@ -38,6 +40,7 @@ public:
             logger::debug("{} is not restricted", a_contEDID);
  return
 
+     *
      * * false;
         }
     }
@@ -48,7 +51,8 @@ public:
             return true;
  }
 
-     * if
+
+     * * if
      * (isRestrictedContainer(a_contEDID)) {
             return true;
         }
@@ -128,7 +132,6 @@ public:
         else
             return settings->maxNumber;
     }
-
 
     inline int GetRandomChance(int a_min, int a_max)
     {
