@@ -45,7 +45,7 @@ namespace Events
                     // Only do stuff when looking at dead actors
                     if (dead_guy && dead_guy->IsDead() && !util->ExceptionName(nameOfCont)) {
                         if (dead_guy->IsInFaction(settings->WerewolfFaction)) {
-                            auto chance = util->GetRandomChance(settings->minNumber, settings->maxNumber);
+                            auto chance = util->GetRandomChance(util->MinChance(), util->MaxChance());
                             if (chance == settings->compareValue) {
                                 wasActivated                  = true;
                                 RE::TESObjectREFR* deadNPCref = dead_guy->AsReference();
@@ -53,7 +53,7 @@ namespace Events
                             }
                         }
                         else {
-                            auto chance = util->GetRandomChance(settings->minNumber, settings->maxNumber);
+                            auto chance = util->GetRandomChance(util->MinChance(), util->MaxChance());
                             if (chance == settings->compareValue) {
                                 wasActivated                  = true;
                                 RE::TESObjectREFR* deadNPCref = dead_guy->AsReference();
@@ -66,7 +66,7 @@ namespace Events
                     if (isContainerEventsActive() && !util->ExceptionName(nameOfCont)) {
                         if (event->objectActivated->GetBaseObject()->GetFormType() == RE::FormType::Container && !isLocked) {
                             if (settings->draugr_container_event_active && nameOfCont.contains("raugr")) {
-                                auto chance = util->GetRandomChance(settings->minNumber, settings->maxNumber);
+                                auto chance = util->GetRandomChance(util->MinChance(), util->MaxChance());
                                 if (chance == settings->compareValue) {
                                     wasActivated = true;
                                     auto obj_ref = event->objectActivated->AsReference();
@@ -74,7 +74,7 @@ namespace Events
                                 }
                             }
                             else if (settings->urn_explosion_event_active && nameOfCont.contains("Urn")) {
-                                auto chance = util->GetRandomChance(settings->minNumber, settings->maxNumber);
+                                auto chance = util->GetRandomChance(util->MinChance(), util->MaxChance());
                                 if (chance == settings->compareValue) {
                                     wasActivated = true;
                                     event->objectActivated->AsReference()->PlaceObjectAtMe(settings->UrnExplosion, false);
@@ -89,7 +89,7 @@ namespace Events
                                 }
                             }
                             else if (settings->dwarven_container_event_active && util->LocationCheck("LocTypeDwarvenAutomatons")) {
-                                auto chance = util->GetRandomChance(settings->minNumber, settings->maxNumber);
+                                auto chance = util->GetRandomChance(util->MinChance(), util->MaxChance());
                                 if (chance == settings->compareValue) {
                                     auto obj_ref = event->objectActivated->AsReference();
                                     wasActivated = true;
@@ -97,7 +97,7 @@ namespace Events
                                 }
                             }
                             else if (settings->shade_container_event_active && (util->LocationCheck("LocTypeWarlockLair") || util->LocationCheck("LocTypeVampireLair"))) {
-                                auto chance = util->GetRandomChance(settings->minNumber, settings->maxNumber);
+                                auto chance = util->GetRandomChance(util->MinChance(), util->MaxChance());
                                 if (chance == settings->compareValue) {
                                     wasActivated = true;
                                     auto obj_ref = event->objectActivated->AsReference();
@@ -105,7 +105,7 @@ namespace Events
                                 }
                             }
                             else if (settings->generic_container_event_active) {
-                                auto chance = util->GetRandomChance(settings->minNumber, settings->maxNumber);
+                                auto chance = util->GetRandomChance(util->MinChance(), util->MaxChance());
                                 if (chance == settings->compareValue) {
                                     wasActivated = true;
                                     auto obj_ref = event->objectActivated->AsReference();

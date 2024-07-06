@@ -40,6 +40,8 @@ public:
     RE::SpellItem*                StressSpell;
     std::chrono::duration<double> thread_delay;
     RE::BGSSoundDescriptorForm*   MemeSound;
+    RE::TESGlobal*                MinChanceGlobal;
+    RE::TESGlobal*                MaxChanceGlobal;
 
     static RE::FormID ParseFormID(const std::string& str);
 
@@ -58,4 +60,5 @@ public:
     inline static bool   useDelayRange{ true };
     inline static double minTime;
     inline static double maxTime;
+    inline static bool   useChanceGlobal{ false };
 };

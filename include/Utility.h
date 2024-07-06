@@ -103,12 +103,39 @@ public:
             return false;
     }
 
+    inline int MinChance()
+    {
+        const auto settings = Settings::GetSingleton();
+        if (settings->useChanceGlobal) {
+            if (settings->compareValue < settings->MinChanceGlobal->value) {
+                settings->compareValue = static_cast<int>(settings->MaxChanceGlobal->value);
+            }
+            return static_cast<int>(settings->MinChanceGlobal->value);
+        }
+        else
+            return settings->minNumber;
+    }
+
+    inline int MaxChance()
+    {
+        const auto settings = Settings::GetSingleton();
+        if (settings->useChanceGlobal) {
+            if (settings->compareValue > settings->MaxChanceGlobal->value) {
+                settings->compareValue = static_cast<int>(settings->MaxChanceGlobal->value);
+            }
+            return static_cast<int>(settings->MaxChanceGlobal->value);
+        }
+        else
+            return settings->maxNumber;
+    }
+
+
     inline int GetRandomChance(int a_min, int a_max)
     {
         static std::random_device       rd;
         static std::mt19937             gen(rd());
         std::uniform_int_distribution<> distrib(a_min, a_max);
-        logger::debug("random chance is {}", distrib(gen));
+        logger::debug("random number is {} between {} and {}", distrib(gen), a_min, a_max);
         return distrib(gen);
     }
 

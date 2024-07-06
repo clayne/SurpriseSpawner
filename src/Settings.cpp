@@ -22,6 +22,7 @@ void Settings::LoadSettings() noexcept
     toggle_visual_explosion        = ini.GetBoolValue("Event Toggles", "bToggleExplosionVisuals");
     delayed_explosion              = ini.GetBoolValue("General", "bDelayedExplosion");
     useDelayRange                  = ini.GetBoolValue("General", "bUseDelayRange");
+    useChanceGlobal                = ini.GetBoolValue("General", "bUseChanceGlobalVariable");
 
     std::string fileName(ini.GetValue("Mod Name", "sModFileName", ""));
     std::string spawnEnemyID(ini.GetValue("FormID", "CorpseSpawnFormID", ""));
@@ -93,6 +94,11 @@ void Settings::LoadSettings() noexcept
     };
     // Load settings
     FileName = fileName;
+
+    if (compareValue > maxNumber || compareValue < minNumber) {
+        compareValue = maxNumber;
+    }
+
     LoadExceptionJSON(L"Data/SKSE/Plugins/MimicExceptions.json");
 
     logger::info("Loaded settings");
@@ -103,7 +109,7 @@ double Settings::GetRandomDouble(double a_min, double a_max)
     static std::random_device        rd;
     static std::mt19937              gen(rd());
     std::uniform_real_distribution<> distrib(a_min, a_max);
-    logger::debug("random chance is {}", distrib(gen));
+    logger::debug("random double is {}", distrib(gen));
     return distrib(gen);
 }
 
@@ -158,6 +164,9 @@ void Settings::LoadForms() noexcept
         StressSpell = skyrim_cast<RE::SpellItem*>(dataHandler->LookupForm(StressSpellFormID, FileName));
 
     // Hardcoded Loads
+
+    MinChanceGlobal = dataHandler->LookupForm(ParseFormID("0x818"), "SurpriseSpawn.esp")->As<RE::TESGlobal>();
+    MaxChanceGlobal = dataHandler->LookupForm(ParseFormID("0x819"), "SurpriseSpawn.esp")->As<RE::TESGlobal>();
 
     WerewolfFaction = dataHandler->LookupForm(ParseFormID("0x43594"), "Skyrim.esm")->As<RE::TESFaction>();
     logger::debug("loaded Faction: {}", WerewolfFaction->GetName());
